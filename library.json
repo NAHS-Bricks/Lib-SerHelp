@@ -1,6 +1,6 @@
 {
   "name": "nahs-Bricks-Lib-SerHelp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Some serial helper functions to be used by NAHS-Bricks-Os and NAHS-Bricks-Features. Formerly those functions where placed in BrickSetup, but are now moved due to dependency issues",
   "keywords": "NAHS-Bricks, helpers, serial",
   "repository":
