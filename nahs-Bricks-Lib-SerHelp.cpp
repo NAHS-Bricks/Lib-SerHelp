@@ -6,32 +6,32 @@ NahsBricksLibSerHelp::NahsBricksLibSerHelp() {
 /*
 Helper to read one line from Serial as input
 */
-String NahsBricksLibSerHelp::readLine() {
-  const byte maxChars = 32;
-  char inputBuffer[maxChars];
-  byte nextPos = 0;
-  
+String NahsBricksLibSerHelp::readLine(bool blocking) {
   while (true) {
     if (Serial.available() > 0) {
       char input = Serial.read();
       if (input == '\n') {
-        inputBuffer[nextPos] = '\0';
+        readLine_inputBuffer[readLine_nextPos] = '\0';
         Serial.print('\n');
-        return String(inputBuffer);
+        readLine_nextPos = 0;
+        return String(readLine_inputBuffer);
       }
       if (input == '\b') {
-        if (nextPos > 0) {
-          nextPos--;
-          inputBuffer[nextPos] = '\b';
+        if (readLine_nextPos > 0) {
+          readLine_nextPos--;
+          readLine_inputBuffer[readLine_nextPos] = '\b';
           Serial.print('\b');
         }
       }
       else if (input != '\r') {
-        inputBuffer[nextPos] = input;
-        nextPos++;
-        if (nextPos >= maxChars) nextPos--;
+        readLine_inputBuffer[readLine_nextPos] = input;
+        readLine_nextPos++;
+        if (readLine_nextPos >= INPUT_BUFFER_LENGTH) readLine_nextPos--;
         Serial.print(input);
       }
+    }
+    else if(!blocking) {
+      return String('\n');
     }
   }
 }
